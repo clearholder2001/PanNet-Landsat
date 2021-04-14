@@ -19,7 +19,7 @@ def predict_patches(predictor, patch_configs, pad=16, use_origial_scale=True, ds
             profile = src.profile
         profile.update(count=3)
 
-        dst_file = osp.join(dst_dir, scene_id + '.tif')
+        dst_file = osp.join(dst_dir, scene_id + '.tif').replace('/', '\\')
         with rasterio.open(dst_file, 'w', **profile) as dst:
             for i, row in extracted_patch_configs.iterrows():
                 src_files = row['src_files']

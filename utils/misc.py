@@ -22,18 +22,18 @@ def download(url, file_name):
         
 def download_landsat8_data(data_dir, baseurl):
     scene_id = osp.basename(baseurl)
-    os.makedirs(osp.join(data_dir, scene_id), exist_ok=True)
+    os.makedirs(osp.join(data_dir, scene_id).replace('/', '\\'), exist_ok=True)
     
-    filenames = [osp.join(data_dir, scene_id, scene_id + '_B{}.TIF'.format(band))
+    filenames = [osp.join(data_dir, scene_id, scene_id + '_B{}.TIF'.format(band)).replace('/', '\\')
                  for band in (2, 3, 4, 8)]
 
-    urls = [osp.join(baseurl, osp.basename(fname)) for fname in filenames]
+    urls = [(baseurl + '/' + osp.basename(fname)) for fname in filenames]
     
     for url, fname in zip(urls, filenames):
         download(url, fname)
     
-    mtl_fname = osp.join(data_dir, scene_id, scene_id + '_MTL.json')
-    mtl_url = osp.join(baseurl ,osp.basename(mtl_fname))
+    mtl_fname = osp.join(data_dir, scene_id, scene_id + '_MTL.json').replace('/', '\\')
+    mtl_url = baseurl + '/' + osp.basename(mtl_fname)
     download(mtl_url, mtl_fname)
     
     return filenames, mtl_fname
@@ -49,12 +49,12 @@ def get_patch_configs(src_dir, training_data_rate=0.9, validation_data_rate=0.1,
     patch_configs = pd.DataFrame(columns=['scene_id', 'src_files', 'metadata_file', 'window_config'])
     for scene_id in os.listdir(src_dir):
         src_files = [
-            glob(osp.join(src_dir, scene_id, '*B8.TIF'))[0], # Panchromatic
-            glob(osp.join(src_dir, scene_id, '*B2.TIF'))[0], # Blue
-            glob(osp.join(src_dir, scene_id, '*B3.TIF'))[0], # Green
-            glob(osp.join(src_dir, scene_id, '*B4.TIF'))[0] # Red
+            glob(osp.join(src_dir, scene_id, '*B8.TIF').replace('/', '\\'))[0], # Panchromatic
+            glob(osp.join(src_dir, scene_id, '*B2.TIF').replace('/', '\\'))[0], # Blue
+            glob(osp.join(src_dir, scene_id, '*B3.TIF').replace('/', '\\'))[0], # Green
+            glob(osp.join(src_dir, scene_id, '*B4.TIF').replace('/', '\\'))[0] # Red
         ]
-        metadata_file = glob(osp.join(src_dir, scene_id, '*MTL.json')),
+        metadata_file = glob(osp.join(src_dir, scene_id, '*MTL.json').replace('/', '\\')),
         pan_width = patch_width * 2
         pan_height = patch_height * 2
         window_configs = get_window_configs(src_files, pan_width, pan_height, include_partial_nodata)

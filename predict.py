@@ -11,9 +11,9 @@ from utils import pred_utils
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--gpu', type=int, default=0)
-    parser.add_argument('--data_dir', default='./data')
-    parser.add_argument('--out_dir', default='./out')
-    parser.add_argument('--pretrained_model', default='./out_model/best_model')
+    parser.add_argument('--data_dir', default='./data'.replace('/', '\\'))
+    parser.add_argument('--out_dir', default='./out'.replace('/', '\\'))
+    parser.add_argument('--pretrained_model', default='./out_model/best_model'.replace('/', '\\'))
     parser.add_argument('--use_lower_scale', dest='use_original_scale', action='store_false')
     args = parser.parse_args()
 
