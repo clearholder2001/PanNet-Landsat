@@ -15,3 +15,13 @@ Please see [examples/demo_on_colab.ipynb](https://github.com/oyam/PanNet-landsat
 
 ### References
 * PanNet: A deep network architecture for pan-sharpening   http://openaccess.thecvf.com/content_iccv_2017/html/Yang_PanNet_A_Deep_ICCV_2017_paper.html
+
+### Environment Setup for Windows
+```
+python -m pip install --upgrade pip setuptools wheel
+pip install .\dependency\GDAL-3.1.4-cp36-cp36m-win_amd64.whl
+pip install .\dependency\rasterio-1.1.8-cp36-cp36m-win_amd64.whl
+pip install chainercv
+pip install -r .\requirements.txt
+```
+Copy .\dependency\cv2.cp36-win_amd64.pyd .\dependency\opencv_world452.dll to Lib\site-packages
